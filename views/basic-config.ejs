@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel="stylesheet" href='/lib/bootstrap/dist/css/bootstrap.css' />
+  </head>
+  <body>
+    <input type='button' value='新增' class="btn btn-default" data-toggle="modal" data-target="#newPanel" />
+    <table class="table-border" cellspacing='0'>
+        <thead>
+            <td class="text-center">类型</td>
+            <td class="text-center">下限</td>
+            <td class="text-center">上限</td>
+            <td class="text-center">报警幅度</td>
+            <td class="text-center">操作</td>
+        </thead>
+        <tbody>
+          <% for(var j=0;j<perfs.length;j++) { %>
+          <tr>
+            <% for(var k=1;k<perfs[j].length;k++) { %>
+              <% if(k==1 || k%2 == 0) { %>
+                <td class="text-center"><%= perfs[j][k] %></td>
+              <% } %>
+              <% } %>
+              <td class="text-center pointer" data-store="<%= perfs[j]%>" onclick="showEditPanel(this)"><a>编辑</a></td>
+          </tr>
+          <% } %>
+        </tbody>
+    </table>
+    </body>
+    <div class="modal fade" id="editPanel" tabindex="-1" role="dialog" aria-labelledby="editPanel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content modal-customized">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title">编辑</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="perfDiv"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" onclick="saveChanges()">提交更改</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  <div class="modal fade" id="newPanel" tabindex="-1" role="dialog" aria-labelledby="newPanel" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content modal-customized">
+              <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                      &times;
+                  </button>
+                  <h4 class="modal-title">新增配置窗口</h4>
+              </div>
+              <div class="modal-body">
+                  <div id="perfNewDiv">
+                      <form>
+                          <table class='table-border'>
+                              <thead>
+                                <tr>
+                                    <td class='text-center'>类型名称</td>
+                                    <td class='text-center'><input type='text' name='type' /></td>
+                                    <td class='text-center'>报警依据</td>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                  <tr>
+                                      <td class='text-center'>下限</td>
+                                      <td class='text-center'><input type='text' name='lower' /></td>
+                                      <td class='text-center'><input type='checkbox' name='isPrimary1' /></td>
+                                  </tr>
+                                  <tr>
+                                      <td class='text-center'>上限</td>
+                                      <td class='text-center'><input type='text' name='upper' /></td>
+                                      <td class='text-center'><input type='checkbox' name='isPrimary2' /></td>
+                                  </tr>
+                                  <tr>
+                                      <td class='text-center'>报警幅度</td>
+                                      <td class='text-center'><input type='text' name='delta' /></td>
+                                      <td class='text-center'><input type='checkbox' name='isPrimary3' /></td>
+                                  </tr>
+                              </tbody>
+                          </table>
+                      </form>
+                  </div>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                  <input type="button" class="btn btn-primary" value="提交" onclick="commitChanges()"></input>
+              </div>
+          </div>
+      </div>
+  </div>
+  <script src="/lib/jquery/dist/jquery.min.js"></script>
+  <script src="/lib/bootstrap/dist/js/bootstrap.js"></script>
+  <script src="/javascripts/main.js"></script>
+</html>
